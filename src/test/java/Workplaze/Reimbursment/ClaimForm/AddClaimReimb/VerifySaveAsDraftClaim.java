@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -16,14 +17,21 @@ import java.time.Duration;
 
 public class VerifySaveAsDraftClaim {
     WebDriver driver;
-    WebDriver wait;
 
     @BeforeTest
     public void setup() throws InterruptedException {
         // Tentukan lokasi chromedriver
         System.setProperty("webdriver.chrome.driver", "H:\\Dataon\\Automation\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-        // Go to Login Page
-        driver = new ChromeDriver();
+
+        // Mengatur opsi Chrome untuk mode headless
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");               // Menjalankan Chrome tanpa UI
+        options.addArguments("--disable-gpu");              // Menonaktifkan GPU (opsional, terutama untuk Windows)
+        options.addArguments("--no-sandbox");               // Opsi untuk lingkungan Linux/container
+        options.addArguments("--disable-dev-shm-usage");     // Mengatasi masalah resource
+
+        // Membuat instance ChromeDriver dengan opsi yang sudah diatur
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://sfworkplaze.dataon.com"); // Ganti dengan URL yang sesuai
 
